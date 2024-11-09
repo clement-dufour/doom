@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: emacs-lisp tangle
+# uuid:
+# key: trigger-key
+# condition: t
+# --
+
+#+begin_src emacs-lisp :tangle $0
+
+#+end_src
