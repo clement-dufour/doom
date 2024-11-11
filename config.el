@@ -201,12 +201,6 @@
   (map! "M-s-<f4>" #'save-buffers-kill-terminal
         "M-<f4>" #'save-buffers-kill-terminal))
 
-(defun clmnt/org-tab-conditional ()
-  (interactive)
-  (if (yas-active-snippets)
-      (yas-next-field-or-maybe-expand)
-    (org-cycle)))
-
 (defun clmnt/yank-link-clipboard ()
   "Copy the url at point to the system clipboard.
 If on top of an Org link, will only copy the link component."
@@ -215,10 +209,19 @@ If on top of an Org link, will only copy the link component."
     (evil-set-register ?+ (or url (user-error "No URL at point")))
     (message "Copied link to system clipboard: %s" url)))
 
+(map! :after org
+      :map org-mode-map
+      :localleader :prefix "l" "Y" #'clmnt/yank-link-clipboard)
+
+(defun clmnt/org-tab-conditional ()
+  (interactive)
+  (if (yas-active-snippets)
+      (yas-next-field-or-maybe-expand)
+    (org-cycle)))
+
 (map! :after evil-org
       :map evil-org-mode-map
-      (:localleader :prefix "l" "Y" #'clmnt/yank-link-clipboard)
-      (:i "<tab>" #'clmnt/org-tab-conditional))
+      :i "<tab>" #'clmnt/org-tab-conditional)
 
 (map! :after evil
       :map evil-window-map
