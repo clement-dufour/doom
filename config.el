@@ -252,3 +252,69 @@ If on top of an Org link, will only copy the link component."
 (add-hook! 'emacs-lisp-mode-hook
   (modify-syntax-entry ?_ "w")
   (modify-syntax-entry ?- "w"))
+
+;; Modes
+(defvar cisco-font-lock-keywords
+  (list
+   ;; '("^[ \t]*\\(!+\\)"
+   ;;   (1 font-lock-comment-delimiter-face))
+   ;; '("^[ \t]*!+\\(.*\\)$"
+   ;;   (1 font-lock-comment-face))
+   '("^[ \t]*\\(no +\\)?\\([A-Za-z-]+\\)\\( \\|$\\)"
+     (2 font-lock-keyword-face))
+   '("^[ \t]*\\(no\\)\\b"
+     (1 font-lock-negation-char-face))
+   ;; (cons (concat "^[ \t]*\\(no +\\)?"
+   ;;               (regexp-opt '("aaa"
+   ;;                             "..."
+   ;;                             "vtp") t)) '(2 font-lock-keyword-face))
+   '("^[ \t]*interface +\\([A-Za-z-]+ *[0-9/]+\\)"
+     (1 font-lock-type-face))
+   '("^[ \t ]*vlan +\\([[0-9]+\\)"
+     (1 font-lock-type-face))
+   '("^[ \t]*\\(description\\|name\\) +\\(.*\\)$"
+     (2 font-lock-string-face))
+   '("\\b\\(shutdown\\)\\b"
+     (1 font-lock-warning-face))
+   ;; IP adresses
+   '("\\b\\(\\([0-1]?[0-9]?[0-9]\\.\\|2[0-4][0-9]\\.\\|25[0-5]\\.\\)\\{3\\}\\([0-1]?[0-9]?[0-9]\\|2[0-4][0-9]\\|25[0-5]\\)\\)\\b"
+     (1 font-lock-variable-name-face))
+   ;; Numbers
+   '("\\b\\([0-9]+\\)\\b"
+     (1 font-lock-variable-name-face))
+   ;; VLAN numbers on a VLAN range
+   ;; Hyphens are defined as word constituents thus not matched with \b on
+   ;; the previous regex expression.
+   '("\\b\\([0-9]+\\)-"
+     (1 font-lock-variable-name-face))
+   '("-\\([0-9]+\\)\\b"
+     (1 font-lock-variable-name-face)))
+  "Font lock defaults for `cisco mode'.")
+
+(defvar cisco-imenu-expression
+  '(("Interfaces" "^[ \t]*interface +\\([A-Za-z-]+ *[0-9/]+\\)" 1)
+    ("VLANs" "^[ \t]*vlan +\\([[0-9]+\\)" 1))
+  "Matchers for `cisco mode'.")
+
+(define-derived-mode cisco-mode
+  prog-mode "Cisco"
+  "Major mode for editing Cisco configuration files."
+  (setq font-lock-defaults '(cisco-font-lock-keywords)
+        comment-start "!"
+        comment-end ""
+        comment-start-skip "^[ \t]*!+[ \t]*")
+  (setq imenu-case-fold-search nil
+        imenu-generic-expression cisco-imenu-expression)
+
+  (modify-syntax-entry ?_ "w" cisco-mode-syntax-table)
+  (modify-syntax-entry ?- "w" cisco-mode-syntax-table)
+  (modify-syntax-entry ?! "<" cisco-mode-syntax-table)
+  (modify-syntax-entry ?\n ">" cisco-mode-syntax-table)
+  (modify-syntax-entry ?\r ">" cisco-mode-syntax-table))
+
+(add-to-list 'auto-mode-alist '("\\.cfg\\'" . cisco-mode))
+
+(add-to-list 'consult-imenu-config
+             '(cisco-mode :toplevel "Interfaces" :types
+               ((?i "Interfaces" font-lock-type-face)
+                (?v "VLANs" font-lock-type-face))))
