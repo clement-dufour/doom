@@ -2,6 +2,8 @@
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
+(defvar clmnt/profile nil)
+
 (setq clmnt/profile (if (eq system-type 'gnu/linux)
                         'home
                       'work))
@@ -32,8 +34,10 @@
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
-(when (doom-font-exists-p "Iosevka")
-    (setq doom-font (font-spec :family "Iosevka" :size 16)))
+(if (doom-font-exists-p "Iosevka")
+    (setq doom-font (font-spec :family "Iosevka" :size 16))
+  (when (doom-font-exists-p "Consolas")
+    (setq doom-font (font-spec :family "Consolas" :size 12))))
 (when (doom-font-exists-p "Cantarell")
     (setq doom-variable-pitch-font (font-spec :family "Cantarell" :size 14 :weight 'regular)))
 
@@ -57,7 +61,7 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory (if (eq clmnt/profile 'home)
                         "~/Documents/org/"
-                      nil))
+                      "~/OneDrive - RTL Group/Documents/org/"))
 (setq org-log-done 'time)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
