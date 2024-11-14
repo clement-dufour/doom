@@ -323,8 +323,8 @@ If on top of an Org link, will only copy the link component."
 
 (add-to-list 'auto-mode-alist '("\\.cfg\\'" . cisco-mode))
 
-(add-to-list 'consult-imenu-config
-             '(cisco-mode :toplevel "Interfaces" :types
-               ((?i "Interfaces" font-lock-type-face)
-                (?v "VLANs" font-lock-type-face)
-                (?h "Hostnames" font-lock-string-face))))
+;; (add-to-list 'consult-imenu-config
+;;              '(cisco-mode :toplevel "Interfaces" :types
+;;                ((?i "Interfaces" font-lock-type-face)
+;;                 (?v "VLANs" font-lock-type-face)
+;;                 (?h "Hostnames" font-lock-string-face))))
