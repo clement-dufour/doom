@@ -270,9 +270,9 @@ If on top of an Org link, will only copy the link component."
    ;;                             "vtp") t)) '(2 font-lock-keyword-face))
    '("^[ \t]*interface +\\([A-Za-z-]+ *[0-9/]+\\)"
      (1 font-lock-type-face))
-   '("^[ \t ]*vlan +\\([[0-9]+\\)"
+   '("^[ \t]*vlan +\\([[0-9]+\\)"
      (1 font-lock-type-face))
-   '("^[ \t]*\\(description\\|name\\) +\\(.*\\)$"
+   '("^[ \t]*\\(hostname\\|description\\|name\\) +\\(.*\\)$"
      (2 font-lock-string-face))
    '("\\b\\(shutdown\\)\\b"
      (1 font-lock-warning-face))
@@ -293,7 +293,8 @@ If on top of an Org link, will only copy the link component."
 
 (defvar cisco-imenu-expression
   '(("Interfaces" "^[ \t]*interface +\\([A-Za-z-]+ *[0-9/]+\\)" 1)
-    ("VLANs" "^[ \t]*vlan +\\([[0-9]+\\)" 1))
+    ("VLANs" "^[ \t]*vlan +\\([[0-9]+\\)" 1)
+    ("Hostnames" "^[ \t]*hostname +\\(.*\\)$" 1))
   "Matchers for `cisco mode'.")
 
 (define-derived-mode cisco-mode
@@ -320,4 +321,5 @@ If on top of an Org link, will only copy the link component."
 (add-to-list 'consult-imenu-config
              '(cisco-mode :toplevel "Interfaces" :types
                ((?i "Interfaces" font-lock-type-face)
-                (?v "VLANs" font-lock-type-face))))
+                (?v "VLANs" font-lock-type-face)
+                (?h "Hostnames" font-lock-string-face))))
