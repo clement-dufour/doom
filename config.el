@@ -303,8 +303,11 @@ If on top of an Org link, will only copy the link component."
         comment-start "!"
         comment-end ""
         comment-start-skip "^[ \t]*!+[ \t]*")
+
   (setq imenu-case-fold-search nil
         imenu-generic-expression cisco-imenu-expression)
+
+  (display-line-numbers-mode 1)
 
   (modify-syntax-entry ?_ "w" cisco-mode-syntax-table)
   (modify-syntax-entry ?- "w" cisco-mode-syntax-table)
