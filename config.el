@@ -34,12 +34,15 @@
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
-(if (doom-font-exists-p "Iosevka")
-    (setq doom-font (font-spec :family "Iosevka" :size 16))
-  (when (doom-font-exists-p "Consolas")
-    (setq doom-font (font-spec :family "Consolas" :size 12))))
-(when (doom-font-exists-p "Cantarell")
-    (setq doom-variable-pitch-font (font-spec :family "Cantarell" :size 14 :weight 'regular)))
+(cond
+ ((doom-font-exists-p "Iosevka")
+  (setq doom-font (font-spec :family "Iosevka" :size 16)))
+ ((doom-font-exists-p "Consolas")
+  (setq doom-font (font-spec :family "Consolas" :size 12))))
+(cond
+ ((doom-font-exists-p "Cantarell")
+   (setq doom-variable-pitch-font
+         (font-spec :family "Cantarell" :size 14 :weight 'regular))))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -165,7 +168,9 @@
     (diff-hl-update)))
 
 (after! recentf
-  (add-to-list 'recentf-exclude (expand-file-name ".local/etc/workspaces/autosave" doom-emacs-dir)))
+  (add-to-list 'recentf-exclude
+               (expand-file-name ".local/etc/workspaces/autosave"
+                                 doom-emacs-dir)))
 
 (after! company
   (setq company-show-quick-access t))
