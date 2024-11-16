@@ -97,7 +97,7 @@
 
 ;; Emacs miscellaneous configuration
 (setq select-enable-clipboard nil
-      confirm-kill-emacs nil
+      ;; confirm-kill-emacs nil
       visible-bell t)
 
 ;; Undo configuration, limit undo to 1 MB
@@ -156,7 +156,7 @@
     (consult-buffer))
 
   (defadvice! center-next-search-result (&rest _)
-    :after '(evil-ex-search-next)
+    :after '(evil-ex-search-next evil-ex-search-previous)
     (evil-scroll-line-to-center nil)))
 
 (after! writeroom-mode
@@ -176,8 +176,8 @@
                (expand-file-name ".local/etc/workspaces/autosave"
                                  doom-emacs-dir)))
 
-(after! company
-  (setq company-show-quick-access t))
+;; (after! company
+;;   (setq company-show-quick-access t))
 
 (after! which-key
   (setq which-key-allow-multiple-replacements t)
@@ -202,7 +202,7 @@
              #'mixed-pitch-mode)
   (remove-hook! 'org-mode-hook #'flyspell-mode)
   (setq org-startup-folded 'overview
-        org-ellipsis " [...] "))
+        org-ellipsis " "))
 
 (after! ox-pandoc
   (add-to-list 'org-pandoc-options-for-docx
