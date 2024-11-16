@@ -115,6 +115,14 @@
 (add-hook! 'window-size-change-functions
            #'frame-hide-title-bar-when-maximized)
 
+;; Misc hooks
+(add-hook! 'prog-mode-hook #'tree-sitter-hl-mode)
+
+;; https://evil.readthedocs.io/en/latest/faq.html#underscore-is-not-a-word-character
+(add-hook! 'emacs-lisp-mode-hook
+  (modify-syntax-entry ?_ "w")
+  (modify-syntax-entry ?- "w"))
+
 ;; Package specific configuration
 (after! doom
   ;; Simpler one-liner banner
@@ -245,14 +253,6 @@ If on top of an Org link, will only copy the link component."
       :map dired-mode-map
       :n "h" #'dired-up-directory
       :n "l" #'dired-find-file)
-
-;; Hooks
-(add-hook! 'prog-mode-hook #'tree-sitter-hl-mode)
-
-;; https://evil.readthedocs.io/en/latest/faq.html#underscore-is-not-a-word-character
-(add-hook! 'emacs-lisp-mode-hook
-  (modify-syntax-entry ?_ "w")
-  (modify-syntax-entry ?- "w"))
 
 ;; Modes
 (defvar cisco-font-lock-keywords
