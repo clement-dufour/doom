@@ -49,7 +49,7 @@
 ;; (after! doom-ui
 ;;   (setq auto-dark-dark-theme 'doom-one
 ;;         auto-dark-light-theme 'doom-tomorrow-day)
-;;   (auto-dark-mode 1))
+;;   (auto-dark-mode +1))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -167,8 +167,8 @@
     (diff-hl-mode -1))
 
   (add-hook! 'writeroom-mode-disable-hook
-    (display-line-numbers-mode 1)
-    (diff-hl-mode 1)
+    (display-line-numbers-mode +1)
+    (diff-hl-mode +1)
     (diff-hl-update)))
 
 (after! recentf
@@ -309,7 +309,7 @@ If on top of an Org link, will only copy the link component."
   (setq imenu-case-fold-search nil
         imenu-generic-expression cisco-imenu-expression)
 
-  (display-line-numbers-mode 1)
+  (display-line-numbers-mode +1)
 
   (modify-syntax-entry ?_ "w" cisco-mode-syntax-table)
   (modify-syntax-entry ?- "w" cisco-mode-syntax-table)
