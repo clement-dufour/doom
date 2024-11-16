@@ -179,6 +179,12 @@
 ;; (after! company
 ;;   (setq company-show-quick-access t))
 
+(after! corfu
+  (when clmnt/work
+    (setq corfu-terminal-disable-on-gui nil)
+    (add-hook! 'corfu-mode-hook
+      (corfu-terminal-mode +1))))
+
 (after! which-key
   (setq which-key-allow-multiple-replacements t)
   (pushnew! which-key-replacement-alist
