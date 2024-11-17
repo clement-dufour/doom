@@ -146,7 +146,7 @@
            #'frame-hide-title-bar-when-maximized)
 
 ;; Misc hooks
-(add-hook! 'prog-mode-hook #'tree-sitter-hl-mode)
+;; (add-hook! 'prog-mode-hook #'tree-sitter-hl-mode)
 
 ;; https://evil.readthedocs.io/en/latest/faq.html#underscore-is-not-a-word-character
 (add-hook! 'emacs-lisp-mode-hook
