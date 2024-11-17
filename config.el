@@ -186,7 +186,8 @@
     (consult-buffer))
 
   (defadvice! center-next-search-result (&rest _)
-    :after '(evil-ex-search-next evil-ex-search-previous)
+    :after '(evil-ex-search-forward evil-ex-search-forward
+             evil-ex-search-next evil-ex-search-previous)
     (evil-scroll-line-to-center nil)))
 
 (after! writeroom-mode
