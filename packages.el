@@ -51,7 +51,4 @@
 
 (package! evil-escape :disable t)
 
-;; https://github.com/LionyxML/auto-dark-emacs
-;; (package! auto-dark)
-
 ;; (package! org-modern)

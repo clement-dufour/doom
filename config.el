@@ -43,7 +43,37 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(defvar clmnt/light-theme 'doom-one-light)
+(defvar clmnt/dark-theme 'doom-one)
+
+(setq doom-theme
+      (if (eq 1 (caar (dbus-ignore-errors
+                        (dbus-call-method
+                         :session
+                         "org.freedesktop.portal.Desktop"
+                         "/org/freedesktop/portal/desktop"
+                         "org.freedesktop.portal.Settings"
+                         "Read"
+                         "org.freedesktop.appearance"
+                         "color-scheme"))))
+          clmnt/dark-theme
+        clmnt/light-theme))
+
+(defun clmnt/dbus-handler (namespace key value)
+  (when (and (string= namespace "org.freedesktop.appearance")
+             (string= key "color-scheme"))
+    (load-theme (if (eq 1 (car value))
+                    clmnt/dark-theme
+                  clmnt/light-theme)
+                :noconfirm)))
+
+(dbus-ignore-errors (dbus-register-signal
+                     :session
+                     "org.freedesktop.portal.Desktop"
+                     "/org/freedesktop/portal/desktop"
+                     "org.freedesktop.portal.Settings"
+                     "SettingChanged"
+                     #'clmnt/dbus-handler))
 
 ;; https://github.com/doomemacs/doomemacs/issues/8119
 ;; (after! doom-ui
