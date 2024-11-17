@@ -371,7 +371,7 @@ If on top of an Org link, will only copy the link component."
    '("^[ \t]*\\(\"+\\)"
      (1 font-lock-comment-delimiter-face))
    '("^[ \t]*\"+\\(.*\\)$"
-     (1 font-lock-comment-face))
+     (1 font-lock-comment-face prepend))
    '("^[ \t]*\\([A-Za-z]+\\)\\( \\|$\\)"
      (1 font-lock-keyword-face))
    '("^[ \t]*\\(let\\|set\\) +\\([A-Za-z_]*\\)\\>"
@@ -384,7 +384,7 @@ If on top of an Org link, will only copy the link component."
   prog-mode "vimrc"
   "Major mode for editing vim configuration files."
   (setq font-lock-defaults '(vimrc-font-lock-keywords t)
-        comment-start "\""
+        comment-start "\"\""
         comment-end ""
         comment-start-skip "^[ \t]*\"+[ \t]*")
 
