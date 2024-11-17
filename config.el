@@ -37,8 +37,8 @@
   (setq doom-font (font-spec :family "Consolas" :size 12))))
 (cond
  ((doom-font-exists-p "Cantarell")
-   (setq doom-variable-pitch-font
-         (font-spec :family "Cantarell" :size 14 :weight 'regular))))
+  (setq doom-variable-pitch-font
+        (font-spec :family "Cantarell" :size 14 :weight 'regular))))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -261,6 +261,7 @@ If on top of an Org link, will only copy the link component."
       :n "l" #'dired-find-file)
 
 ;; Modes
+;; Cisco mode
 (defvar cisco-font-lock-keywords
   (list
    ;; '("^[ \t]*\\(!+\\)"
@@ -316,6 +317,8 @@ If on top of an Org link, will only copy the link component."
         imenu-generic-expression cisco-imenu-expression)
 
   (display-line-numbers-mode +1)
+  ;; TODO: Should probably try to use highlight-numbers-mode here
+  ;; (highlight-numbers-mode +1)
 
   (modify-syntax-entry ?_ "w" cisco-mode-syntax-table)
   (modify-syntax-entry ?- "w" cisco-mode-syntax-table)
@@ -331,6 +334,8 @@ If on top of an Org link, will only copy the link component."
 ;;                 (?v "VLANs" font-lock-type-face)
 ;;                 (?h "Hostnames" font-lock-string-face))))
 
+;; Vimrc mode
+;; TODO: Should probably derive from conf space mode
 (defvar vimrc-font-lock-keywords
   (list
    '("^[ \t]*\\(\"+\\)"
