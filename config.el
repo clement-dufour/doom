@@ -42,38 +42,40 @@
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
+;; `load-theme' function.
 (defvar clmnt/light-theme 'doom-one-light)
 (defvar clmnt/dark-theme 'doom-one)
 
-(setq doom-theme
-      (if (eq 1 (caar (dbus-ignore-errors
-                        (dbus-call-method
-                         :session
-                         "org.freedesktop.portal.Desktop"
-                         "/org/freedesktop/portal/desktop"
-                         "org.freedesktop.portal.Settings"
-                         "Read"
-                         "org.freedesktop.appearance"
-                         "color-scheme"))))
-          clmnt/dark-theme
-        clmnt/light-theme))
+(setq doom-theme clmnt/dark-theme)
 
-(defun clmnt/dbus-handler (namespace key value)
-  (when (and (string= namespace "org.freedesktop.appearance")
-             (string= key "color-scheme"))
-    (load-theme (if (eq 1 (car value))
-                    clmnt/dark-theme
+(after! dbus
+  (defun clmnt/load-theme (dark)
+    (load-theme (if dark clmnt/dark-theme
                   clmnt/light-theme)
-                :noconfirm)))
+                :noconfirm))
 
-(dbus-ignore-errors (dbus-register-signal
-                     :session
-                     "org.freedesktop.portal.Desktop"
-                     "/org/freedesktop/portal/desktop"
-                     "org.freedesktop.portal.Settings"
-                     "SettingChanged"
-                     #'clmnt/dbus-handler))
+  (defun clmnt/dbus-handler (namespace key value)
+    (when (and (string= namespace "org.freedesktop.appearance")
+               (string= key "color-scheme"))
+      (clmnt/load-theme (eq 1 (car value)))))
+
+  (dbus-ignore-errors (dbus-register-signal
+                       :session
+                       "org.freedesktop.portal.Desktop"
+                       "/org/freedesktop/portal/desktop"
+                       "org.freedesktop.portal.Settings"
+                       "SettingChanged"
+                       #'clmnt/dbus-handler))
+
+  (clmnt/load-theme (eq 1 (caar (dbus-ignore-errors
+                                  (dbus-call-method
+                                   :session
+                                   "org.freedesktop.portal.Desktop"
+                                   "/org/freedesktop/portal/desktop"
+                                   "org.freedesktop.portal.Settings"
+                                   "Read"
+                                   "org.freedesktop.appearance"
+                                   "color-scheme"))))))
 
 ;; https://github.com/doomemacs/doomemacs/issues/8119
 ;; (after! doom-ui
@@ -322,8 +324,8 @@ If on top of an Org link, will only copy the link component."
    '("\\b\\([0-9]+\\)\\b"
      (1 font-lock-variable-name-face))
    ;; VLAN numbers on a VLAN range
-   ;; Hyphens are defined as word constituents thus not matched with \b on
-   ;; the previous regex expression.
+   ;; Hyphens are defined as word constituents thus not matched with \b on the
+   ;; previous regex expression.
    '("\\b\\([0-9]+\\)-"
      (1 font-lock-variable-name-face))
    '("-\\([0-9]+\\)\\b"
