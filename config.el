@@ -2,7 +2,7 @@
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
-(defvar clmnt/work (not (eq system-type 'gnu/linux))
+(defvar clmnt/work (eq system-type 'windows-nt)
   "Configuration might get different on my work laptop.")
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
@@ -46,7 +46,14 @@
 (defvar clmnt/light-theme 'doom-one-light)
 (defvar clmnt/dark-theme 'doom-one)
 
-(setq doom-theme clmnt/dark-theme)
+(setq doom-theme
+      (if (and (eq system-type 'windows-nt)
+               (eq 1 (w32-read-registry
+                      'HKCU
+                      "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"
+                      "AppsUseLightTheme")))
+          clmnt/light-theme
+        clmnt/dark-theme))
 
 (after! dbus
   (defun clmnt/change-theme (dark)
@@ -145,8 +152,9 @@
 
 (add-to-list 'default-frame-alist '(alpha-background . 95))
 
-(add-hook! 'window-size-change-functions
-           #'frame-hide-title-bar-when-maximized)
+(unless clmnt/work
+ (add-hook! 'window-size-change-functions
+            #'frame-hide-title-bar-when-maximized))
 
 ;; Misc hooks
 ;; (add-hook! 'prog-mode-hook #'tree-sitter-hl-mode)
