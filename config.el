@@ -43,7 +43,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function.
-(defvar clmnt/light-theme 'doom-one-light)
+(defvar clmnt/light-theme 'doom-tomorrow-day)
 (defvar clmnt/dark-theme 'doom-one)
 
 (setq doom-theme
@@ -55,27 +55,18 @@
           clmnt/light-theme
         clmnt/dark-theme))
 
+(defun clmnt/flip-theme (dark)
+  (if dark
+      (setq doom-theme clmnt/dark-theme)
+    (setq doom-theme clmnt/light-theme))
+  (unless (eq (car custom-enabled-themes)
+              doom-theme)
+    (if (custom-theme-p doom-theme)
+        (enable-theme doom-theme)
+      (load-theme doom-theme :noconfirm))))
+
 (after! dbus
-  (defun clmnt/change-theme (dark)
-    (if dark
-        (setq doom-theme clmnt/dark-theme)
-      (setq doom-theme clmnt/light-theme))
-    (load-theme doom-theme :noconfirm))
-
-  (defun clmnt/dbus-handler (namespace key value)
-    (when (and (string= namespace "org.freedesktop.appearance")
-               (string= key "color-scheme"))
-      (clmnt/change-theme (eq 1 (car value)))))
-
-  (dbus-ignore-errors (dbus-register-signal
-                       :session
-                       "org.freedesktop.portal.Desktop"
-                       "/org/freedesktop/portal/desktop"
-                       "org.freedesktop.portal.Settings"
-                       "SettingChanged"
-                       #'clmnt/dbus-handler))
-
-  (clmnt/change-theme (eq 1 (caar (dbus-ignore-errors
+  (clmnt/flip-theme (eq 1 (caar (dbus-ignore-errors
                                   (dbus-call-method
                                    :session
                                    "org.freedesktop.portal.Desktop"
@@ -83,7 +74,21 @@
                                    "org.freedesktop.portal.Settings"
                                    "Read"
                                    "org.freedesktop.appearance"
-                                   "color-scheme"))))))
+                                   "color-scheme")))))
+
+  (defun clmnt/dbus-handler (namespace key value)
+    (when (and (string= namespace "org.freedesktop.appearance")
+               (string= key "color-scheme"))
+      (clmnt/flip-theme (eq 1 (car value)))))
+
+  ;; dbus-register-signal prevents multiple registrations
+  (dbus-ignore-errors (dbus-register-signal
+                       :session
+                       "org.freedesktop.portal.Desktop"
+                       "/org/freedesktop/portal/desktop"
+                       "org.freedesktop.portal.Settings"
+                       "SettingChanged"
+                       #'clmnt/dbus-handler)))
 
 ;; https://github.com/doomemacs/doomemacs/issues/8119
 ;; (after! doom-ui
