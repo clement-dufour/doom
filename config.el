@@ -314,10 +314,10 @@ If on top of an Org link, will only copy the link component."
 ;; Cisco mode
 (defvar cisco-font-lock-keywords
   (list
-   ;; '("^[ \t]*\\(!+\\)"
-   ;;   (1 font-lock-comment-delimiter-face))
-   ;; '("^[ \t]*!+\\(.*\\)$"
-   ;;   (1 font-lock-comment-face))
+   '("^[ \t]*\\(!+\\)"
+     (1 font-lock-comment-delimiter-face))
+   '("^[ \t]*!+\\(.*\\)$"
+     (1 font-lock-comment-face))
    '("^[ \t]*\\(no +\\)?\\([A-Za-z-]+\\)\\( \\|$\\)"
      (2 font-lock-keyword-face))
    '("^[ \t]*\\(no\\)\\b"
@@ -343,32 +343,28 @@ If on top of an Org link, will only copy the link component."
    ;; VLAN numbers on a VLAN range
    ;; Hyphens are defined as word constituents thus not matched with \b on the
    ;; previous regex expression.
-   '("\\b\\([0-9]+\\)-"
-     (1 font-lock-variable-name-face))
-   '("-\\([0-9]+\\)\\b"
-     (1 font-lock-variable-name-face)))
+   '("\\b\\([0-9]+\\)-\\([0-9]+\\)\\b"
+     (1 font-lock-variable-name-face)
+     (2 font-lock-variable-name-face)))
   "Font lock defaults for `cisco mode'.")
 
 (defvar cisco-imenu-expression
   '(("Interfaces" "^[ \t]*interface +\\([A-Za-z-]+ *[0-9/]+\\)" 1)
-    ("VLANs" "^[ \t]*vlan +\\([[0-9]+\\)" 1)
-    ("Hostnames" "^[ \t]*hostname +\\(.*\\)$" 1))
+    ;; ("VLANs" "^[ \t]*vlan +\\([[0-9]+\\)" 1)
+    ;; ("Hostnames" "^[ \t]*hostname +\\(.*\\)$" 1)
+    )
   "Matchers for `cisco mode'.")
 
 (define-derived-mode cisco-mode
   prog-mode "Cisco"
   "Major mode for editing Cisco configuration files."
-  (setq font-lock-defaults '(cisco-font-lock-keywords)
+  (setq font-lock-defaults '(cisco-font-lock-keywords t)
         comment-start "!"
         comment-end ""
         comment-start-skip "^[ \t]*!+[ \t]*")
 
   (setq imenu-case-fold-search nil
         imenu-generic-expression cisco-imenu-expression)
-
-  (display-line-numbers-mode +1)
-  ;; TODO: Should probably try to use highlight-numbers-mode here
-  ;; (highlight-numbers-mode +1)
 
   (modify-syntax-entry ?_ "w" cisco-mode-syntax-table)
   (modify-syntax-entry ?- "w" cisco-mode-syntax-table)
@@ -377,6 +373,9 @@ If on top of an Org link, will only copy the link component."
   (modify-syntax-entry ?\r ">" cisco-mode-syntax-table))
 
 (add-to-list 'auto-mode-alist '("\\.cfg\\'" . cisco-mode))
+
+(add-hook! 'cisco-mode-hook
+  (highlight-numbers-mode -1))
 
 ;; (add-to-list 'consult-imenu-config
 ;;              '(cisco-mode :toplevel "Interfaces" :types
@@ -406,8 +405,6 @@ If on top of an Org link, will only copy the link component."
   (setq font-lock-defaults '(vimrc-font-lock-keywords t)
         comment-start "\"\""
         comment-end ""
-        comment-start-skip "^[ \t]*\"+[ \t]*")
-
-  (display-line-numbers-mode +1))
+        comment-start-skip "^[ \t]*\"+[ \t]*"))
 
 (add-to-list 'auto-mode-alist '("init\\.vim\\'" . vimrc-mode))
