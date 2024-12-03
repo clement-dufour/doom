@@ -55,7 +55,7 @@
           clmnt/light-theme
         clmnt/dark-theme))
 
-(defun clmnt/flip-theme (dark)
+(defun clmnt/change-theme (dark)
   (if dark
       (setq doom-theme clmnt/dark-theme)
     (setq doom-theme clmnt/light-theme))
@@ -66,7 +66,7 @@
       (load-theme doom-theme :noconfirm))))
 
 (after! dbus
-  (clmnt/flip-theme (eq 1 (caar (dbus-ignore-errors
+  (clmnt/change-theme (eq 1 (caar (dbus-ignore-errors
                                   (dbus-call-method
                                    :session
                                    "org.freedesktop.portal.Desktop"
@@ -79,7 +79,7 @@
   (defun clmnt/dbus-handler (namespace key value)
     (when (and (string= namespace "org.freedesktop.appearance")
                (string= key "color-scheme"))
-      (clmnt/flip-theme (eq 1 (car value)))))
+      (clmnt/change-theme (eq 1 (car value)))))
 
   ;; dbus-register-signal prevents multiple registrations
   (dbus-ignore-errors (dbus-register-signal
