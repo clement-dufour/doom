@@ -326,8 +326,8 @@ If on top of an Org link, will only copy the link component."
    ;;               (regexp-opt '("aaa"
    ;;                             "..."
    ;;                             "vtp") t)) '(2 font-lock-keyword-face))
-   '("^[ \t]*interface +\\([A-Za-z-]+ *[0-9/]+\\)"
-     (1 font-lock-type-face))
+   '("^[ \t]*interface +\\(range \\)?\\([A-Za-z-]+ *[0-9/-]+\\)"
+     (2 font-lock-type-face))
    '("^[ \t]*vlan +\\([[0-9]+\\)"
      (1 font-lock-type-face))
    '("^[ \t]*\\(hostname\\|description\\|name\\) +\\(.*\\)$"
