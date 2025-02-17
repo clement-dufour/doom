@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
 # name: emacs-lisp tangle
 # uuid:
-# key: trigger-key
+# key: tangle
 # condition: t
 # --
 

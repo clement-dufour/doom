@@ -1,0 +1,51 @@
+# -*- mode: snippet -*-
+# contributor: Clément Dufour
+# name: report
+# key: report
+# condition: t
+# --
+
+#+TITLE:${1:Compte Rendu de Réunion}
+#+AUTHOR:`user-full-name`
+#+DATE:`(format-time-string "%d %B %Y")`
+#+PANDOC_METADATA: "subtitle:`
+(nth 1
+     (reverse (split-string
+               buffer-file-name "/")))
+`"
+`
+(when (file-exists-p "reference.docx")
+  "#+PANDOC_OPTIONS: reference-doc:reference.docx")
+`
+#+STARTUP:showall
+#+OPTIONS: H:1 todo:nil tags:nil
+#+TODO: TODO(t) | DONE(d)
+#+TAGS: Validation(v)
+
+* Participants
+- $2
+- `user-full-name`
+
+* Ordre du jour
+- $3
+
+* Résumé
+#+BEGIN: columnview :id global :match "Validation" :format "%ITEM(Validations)"
+#+END:
+#+BEGIN: columnview :id global :match "/TODO|DONE" :format "%ITEM(Tâche) %TODO(Statut)"
+#+END:
+
+* Notes
+** $0
+
+* Local Variables :noexport:
+:PROPERTIES:
+:VISIBILITY: folded
+:END:
+`
+(concat
+ "# Local Variables:\n"
+ "# eval: (add-hook! 'before-save-hook :local #'org-update-all-dblocks)\n"
+ "# eval: (add-hook! 'after-save-hook :local #'org-pandoc-export-to-docx)\n"
+ "# End:")
+`
