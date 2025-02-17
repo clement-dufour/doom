@@ -51,4 +51,4 @@
 
 (package! evil-escape :disable t)
 
-;; (package! org-modern)
+(package! org-modern)
