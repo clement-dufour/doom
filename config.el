@@ -48,7 +48,7 @@
 ;; `load-theme' function.
 (defvar clmnt/light-theme 'doom-tomorrow-day)
 (defvar clmnt/dark-theme (if clmnt/work
-                             'doom-old-hope
+                             'doom-palenight
                            'doom-one))
 
 (setq doom-theme
@@ -320,43 +320,48 @@ If on top of an Org link, will only copy the link component."
 ;; Cisco mode
 (defvar cisco-font-lock-keywords
   (list
-   '("^[[:space:]]*\\(!+\\)"
-     (1 font-lock-comment-delimiter-face))
-   '("^[[:space:]]*!+\\(.*\\)$"
-     (1 font-lock-comment-face))
-   '("^[[:space:]]*\\(?:no +\\)?\\([A-Za-z-]+\\)\\(?: \\|$\\)"
-     (1 font-lock-keyword-face))
-   '("^[[:space:]]*\\(no\\)\\>"
+   '("^[[:space:]]*\\(!+\\(?: +\\)?\\)\\(.*\\)$"
+     (1 font-lock-comment-delimiter-face)
+     (2 font-lock-comment-face))
+   '("^[[:space:]]*\\(no\\) "
      (1 font-lock-negation-char-face))
-   ;; (cons (concat "^[[:space:]]*\\(no +\\)?"
-   ;;               (regexp-opt '("aaa"
-   ;;                             "..."
-   ;;                             "vtp") t)) '(2 font-lock-keyword-face))
-   '("^[[:space:]]*interface +\\(?:range \\)?\\([A-Za-z-]+ *[0-9/-]+\\)"
-     (1 font-lock-type-face))
-   ;; '("^[[:space:]]*vlan +\\([[0-9]+\\)"
-   ;;   (1 font-lock-type-face))
+   '("^[[:space:]]*\\(?:no +\\)?\\(shutdown\\) *$"
+     (1 font-lock-warning-face))
+   '("^[[:space:]]*\\(?:no +\\)?\\([A-Za-z-]+\\)\\(?: \\|$\\)"
+     (1 font-lock-builtin-face))
+   '("^[[:space:]]*\\(?:passive-\\)?interface +\\(?:range \\)?\\([A-Za-z][A-Za-z-]* *\\(?:[0-9]\\{1,4\\}/\\)\\{0,2\\}[0-9]\\{1,4\\}\\(?:-[0-9]\\{1,4\\}\\)? *$\\)"
+     (1 font-lock-constant-face))
    '("^[[:space:]]*\\(?:hostname\\|description\\|name\\) +\\(.*\\)$"
      (1 font-lock-string-face))
-   '("\\<\\(shutdown\\)\\>"
-     (1 font-lock-warning-face))
    ;; IP adresses
-   '("\\<\\(\\(?:[0-2]?[0-9]?[0-9]\\.\\|2[0-4][0-9]\\.\\|25[0-5]\\.\\)\\{3\\}\\(?:[0-2]?[0-9]?[0-9]\\|2[0-4][0-9]\\|25[0-5]\\)\\)\\>"
-     (1 font-lock-variable-name-face))
+   '("\\<\\(\\(?:[0-1]?[0-9]?[0-9]\\.\\|2[0-4][0-9]\\.\\|25[0-5]\\.\\)\\{3\\}\\(?:[0-1]?[0-9]?[0-9]\\|2[0-4][0-9]\\|25[0-5]\\)\\(?:/\\([0-2]?[0-9]\\|3[0-2]\\)\\)?\\)\\>"
+     (1 font-lock-string-face))
    ;; Numbers
-   '("\\<\\(-?[0-9]+\\)\\>"
+   '("\\<\\(-?[0-9]+\\(?:\\(?:\\.\\|:\\)[0-9]+\\)?\\)\\>"
      (1 font-lock-variable-name-face))
    ;; VLAN numbers on a VLAN range
-   ;; Hyphens are defined as word constituents thus not matched with \b on the
-   ;; previous regex expression.
+   ;; Hyphens are defined as word constituents thus not matched by the previous
+   ;; regex expression.
    '("\\<\\([0-9]+\\)-\\([0-9]+\\)\\>"
      (1 font-lock-variable-name-face)
-     (2 font-lock-variable-name-face)))
+     (2 font-lock-variable-name-face))
+  ;; Special keywords
+  (cons (regexp-opt '("active"
+                      "all"
+                      "any"
+                      "auto"
+                      "enable"
+                      "deny"
+                      "log"
+                      "permit"
+                      "run")
+                    'words)
+        '(1 font-lock-keyword-face)))
   "Font lock defaults for `cisco mode'.")
 
 (defvar cisco-imenu-expression
-  '(("Interfaces" "^[[:space:]]*interface +\\([A-Za-z-]+ *[0-9/]+\\)" 1)
-    ;; ("VLANs" "^[[:space:]]*vlan +\\([[0-9]+\\)" 1)
+  '(("Interface" "^[[:space:]]*interface +\\([A-Za-z][A-Za-z-]* *\\(?:[0-9]\\{1,4\\}/\\)\\{0,2\\}[0-9]\\{1,4\\}\\) *$" 1)
+    ;; ("VLAN" "^[[:space:]]*vlan +\\([[0-9]+\\)" 1)
     ;; ("Hostnames" "^[[:space:]]*hostname +\\(.*\\)$" 1)
     )
   "Matchers for `cisco mode'.")
@@ -367,7 +372,7 @@ If on top of an Org link, will only copy the link component."
   (setq font-lock-defaults '(cisco-font-lock-keywords t)
         comment-start "!"
         comment-end ""
-        comment-start-skip "^[[:space:]]*!+[[:space:]]*")
+        comment-start-skip "^[[:space:]]*!+ *")
 
   (setq imenu-case-fold-search nil
         imenu-generic-expression cisco-imenu-expression)
