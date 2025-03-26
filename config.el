@@ -95,6 +95,9 @@
                        "SettingChanged"
                        #'clmnt/dbus-handler)))
 
+(if (eq system-type 'gnu/linux)
+    (require 'dbus))
+
 ;; https://github.com/doomemacs/doomemacs/issues/8119
 ;; (after! doom-ui
 ;;   (setq auto-dark-dark-theme 'doom-one
