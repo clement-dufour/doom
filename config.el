@@ -48,7 +48,7 @@
 ;; `load-theme' function.
 (defvar clmnt/light-theme 'doom-tomorrow-day)
 (defvar clmnt/dark-theme (if clmnt/work
-                             'doom-old-hope
+                             'doom-palenight
                            'doom-one))
 
 (setq doom-theme
@@ -94,6 +94,9 @@
                        "org.freedesktop.portal.Settings"
                        "SettingChanged"
                        #'clmnt/dbus-handler)))
+
+(if (eq system-type 'gnu/linux)
+    (require 'dbus))
 
 ;; https://github.com/doomemacs/doomemacs/issues/8119
 ;; (after! doom-ui
