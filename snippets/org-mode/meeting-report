@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # contributor: Clément Dufour
-# name: report
+# name: meeting-report
 # key: report
 # condition: t
 # --
@@ -13,15 +13,26 @@
      (reverse (split-string
                buffer-file-name "/")))
 `"
+
+* :noexport:
+:PROPERTIES:
+:VISIBILITY: folded
+:END:
 `
-(when (file-exists-p "reference.docx")
-  "#+PANDOC_OPTIONS: reference-doc:reference.docx")
+(concat
+ "# Local Variables:\n"
+ "# eval: (add-hook! 'before-save-hook :local #'org-update-all-dblocks)\n"
+ "# eval: (add-hook! 'after-save-hook :local #'org-pandoc-export-to-docx)\n"
+ "# End:")
 `
 #+STARTUP:showall
 #+OPTIONS: H:1 todo:nil tags:nil
 #+TODO: TODO(t) | DONE(d)
 #+TAGS: Validation(v)
-
+`
+(when (file-exists-p "reference.docx")
+  "#+PANDOC_OPTIONS: reference-doc:reference.docx")
+`
 * Participants
 - $2
 - `user-full-name`
@@ -37,15 +48,3 @@
 
 * Notes
 ** $0
-
-* Local Variables :noexport:
-:PROPERTIES:
-:VISIBILITY: folded
-:END:
-`
-(concat
- "# Local Variables:\n"
- "# eval: (add-hook! 'before-save-hook :local #'org-update-all-dblocks)\n"
- "# eval: (add-hook! 'after-save-hook :local #'org-pandoc-export-to-docx)\n"
- "# End:")
-`
