@@ -418,4 +418,4 @@ If on top of an Org link, will only copy the link component."
         comment-end ""
         comment-start-skip "^[ \t]*\"+[ \t]*"))
 
-(add-to-list 'auto-mode-alist '("init\\.vim\\'" . vimrc-mode))
+(add-to-list 'auto-mode-alist '("\\(init\\.vim\\|vimrc\\)\\'" . vimrc-mode))
