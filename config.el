@@ -306,8 +306,8 @@ If on top of an Org link, will only copy the link component."
       "SPC" #'evil-window-rotate-upwards)
 
 (map! :after better-jumper
-      :n [mouse-8] #'better-jumper-jump-backward
-      :n [mouse-9] #'better-jumper-jump-forward)
+      :n [mouse-4] #'better-jumper-jump-backward
+      :n [mouse-5] #'better-jumper-jump-forward)
 
 (map! :after ibuffer
       :map ibuffer-mode-map
