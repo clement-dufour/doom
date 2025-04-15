@@ -212,16 +212,7 @@
     (evil-scroll-line-to-center nil)))
 
 (after! writeroom-mode
-  (setq +zen-text-scale 0.8)
-
-  (add-hook! 'writeroom-mode-enable-hook
-    (display-line-numbers-mode -1)
-    (diff-hl-mode -1))
-
-  (add-hook! 'writeroom-mode-disable-hook
-    (display-line-numbers-mode +1)
-    (diff-hl-mode +1)
-    (diff-hl-update)))
+  (setq +zen-text-scale 0.8))
 
 (after! recentf
   (add-to-list 'recentf-exclude
@@ -230,12 +221,6 @@
 
 ;; (after! company
 ;;   (setq company-show-quick-access t))
-
-(after! corfu
-  (when clmnt/work
-    (setq corfu-terminal-disable-on-gui nil)
-    (add-hook! 'corfu-mode-hook
-      (corfu-terminal-mode +1))))
 
 (after! which-key
   (setq which-key-allow-multiple-replacements t)
@@ -284,16 +269,6 @@ If on top of an Org link, will only copy the link component."
 (map! :after org
       :map org-mode-map
       :localleader :prefix "l" "Y" #'clmnt/yank-link-clipboard)
-
-(defun clmnt/org-tab-conditional ()
-  (interactive)
-  (if (yas-active-snippets)
-      (yas-next-field-or-maybe-expand)
-    (org-cycle)))
-
-(map! :after evil-org
-      :map evil-org-mode-map
-      :i "<tab>" #'clmnt/org-tab-conditional)
 
 (map! :after evil
       :map evil-window-map
