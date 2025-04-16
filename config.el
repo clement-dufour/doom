@@ -31,14 +31,14 @@
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
 (cond
- ((doom-font-exists-p "Iosevka")
-  (setq doom-font (font-spec :family "Iosevka" :size 16)))
+ ((doom-font-exists-p "Adwaita Mono")
+  (setq doom-font (font-spec :family "Adwaita Mono" :size 15)))
  ((doom-font-exists-p "Consolas")
   (setq doom-font (font-spec :family "Consolas" :size 14))))
 (cond
- ((doom-font-exists-p "Cantarell")
+ ((doom-font-exists-p "Adwaita Sans")
   (setq doom-variable-pitch-font
-        (font-spec :family "Cantarell" :size 14 :weight 'regular)))
+        (font-spec :family "Adwaita Sans" :size 16 :weight 'regular)))
  ((doom-font-exists-p "Calibri")
   (setq doom-variable-pitch-font
         (font-spec :family "Calibri" :size 16 :weight 'regular))))
