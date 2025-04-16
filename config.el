@@ -98,12 +98,6 @@
 (if (eq system-type 'gnu/linux)
     (require 'dbus))
 
-;; https://github.com/doomemacs/doomemacs/issues/8119
-;; (after! doom-ui
-;;   (setq auto-dark-dark-theme 'doom-one
-;;         auto-dark-light-theme 'doom-tomorrow-day)
-;;   (auto-dark-mode +1))
-
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 ;;(setq display-line-numbers-type t)
