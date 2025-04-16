@@ -4,15 +4,17 @@
 # key: po
 # condition: t
 # --
-interface $1
- description $4
- switchport mode trunk
- switchport trunk allowed vlan $5
 interface $2
  description $4
+ channel-group $1 mode active
  switchport mode trunk
  switchport trunk allowed vlan $5
-interface Port-channel$3
+interface $3
+ description $4
+ channel-group $1 mode active
+ switchport mode trunk
+ switchport trunk allowed vlan $5
+interface Port-channel$1
  description $4
  switchport mode trunk
  switchport trunk allowed vlan $5
