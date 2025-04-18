@@ -147,7 +147,7 @@
       ;; confirm-kill-emacs nil
       visible-bell t)
 
-;; Undo configuration, limit undo to 1 MB
+;; Undo configuration, limit undo to 1 MiB
 (setq undo-limit (* 1024 1024)
       evil-want-fine-undo t)
 
