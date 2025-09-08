@@ -271,6 +271,16 @@ If on top of an Org link, will only copy the link component."
       :map org-mode-map
       :localleader :prefix "l" "Y" #'clmnt/yank-link-clipboard)
 
+(defun clmnt/org-tab-conditional ()
+  (interactive)
+  (if (yas-active-snippets)
+      (yas-next-field-or-maybe-expand)
+    (org-cycle)))
+
+(map! :after evil-org
+      :map evil-org-mode-map
+      :i "<tab>" #'clmnt/org-tab-conditional)
+
 (map! :after evil
       :map evil-window-map
       "SPC" #'evil-window-rotate-upwards)
