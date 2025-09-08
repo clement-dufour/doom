@@ -2,7 +2,8 @@
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
-(defvar clmnt/work (eq system-type 'windows-nt)
+(defvar clmnt/work (or (memq 'windows doom-system)
+                       (memq 'wsl doom-system))
   "Configuration might get different on my work laptop.")
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
