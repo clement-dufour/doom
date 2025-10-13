@@ -265,6 +265,7 @@
                                   ("HOLD" . +org-todo-onhold) ("PROJ" . +org-todo-project)
                                   ("NO" . +org-todo-cancel) ("KILL" . +org-todo-cancel)
                                   ("TBRD" . +org-todo-active)))
+  (setq! org-ascii-headline-spacing '(0 . 1)))
 
 (after! ox-pandoc
   (add-to-list 'org-pandoc-options-for-docx
