@@ -240,14 +240,31 @@
   (ispell-set-spellchecker-params)
   (ispell-hunspell-add-multi-dic "en_US,fr_FR"))
 
+(defun clmnt/org-summary-todo (n-done n-not-done)
+  "Switch entry to DONE when all subentries are done, to TODO otherwise."
+  (let (org-log-done org-todo-log-states)
+    (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+
 (after! org
   (add-hook! 'org-mode-hook
              #'mixed-pitch-mode
              #'+org-pretty-mode
              (display-line-numbers-mode -1))
   (remove-hook! 'org-mode-hook #'flyspell-mode)
+
+  (add-hook! 'org-after-todo-statistics-hook #'clmnt/org-summary-todo)
+
   (setq org-startup-folded 'overview
-        org-ellipsis " "))
+        org-ellipsis " ")
+  (setq! org-todo-keywords '((sequence "TODO(t)" "PROJ(p)" "TBRD(r)" "STRT(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)"
+                              "|" "DONE(d)" "KILL(k)")
+                             (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
+                             (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
+  (setq! org-todo-keyword-faces '(("[-]" . +org-todo-active) ("STRT" . +org-todo-active)
+                                  ("[?]" . +org-todo-onhold) ("WAIT" . +org-todo-onhold)
+                                  ("HOLD" . +org-todo-onhold) ("PROJ" . +org-todo-project)
+                                  ("NO" . +org-todo-cancel) ("KILL" . +org-todo-cancel)
+                                  ("TBRD" . +org-todo-active)))
 
 (after! ox-pandoc
   (add-to-list 'org-pandoc-options-for-docx
