@@ -82,7 +82,7 @@
                                    "org.freedesktop.appearance"
                                    "color-scheme")))))
 
-  (defun clmnt/dbus-handler (namespace key value)
+  (defun clmnt/theme-dbus-handler (namespace key value)
     (when (and (string= namespace "org.freedesktop.appearance")
                (string= key "color-scheme"))
       (clmnt/change-theme (eq 1 (car value)))))
@@ -94,7 +94,7 @@
                        "/org/freedesktop/portal/desktop"
                        "org.freedesktop.portal.Settings"
                        "SettingChanged"
-                       #'clmnt/dbus-handler)))
+                       #'clmnt/theme-dbus-handler)))
 
 (if (eq system-type 'gnu/linux)
     (require 'dbus))
