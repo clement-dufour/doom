@@ -6,6 +6,7 @@
                        (memq 'wsl doom-system))
   "Configuration might get different on my work laptop.")
 
+
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
 (setq user-full-name "Clément Dufour")
@@ -26,11 +27,6 @@
 ;;
 ;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-;;
-;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
-;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
-;; refresh your font settings. If Emacs still can't find your font, it likely
-;; wasn't installed correctly. Font issues are rarely Doom issues!
 (cond
  ((doom-font-exists-p "Adwaita Mono")
   (setq doom-font (font-spec :family "Adwaita Mono" :size 15)))
@@ -43,6 +39,11 @@
  ((doom-font-exists-p "Calibri")
   (setq doom-variable-pitch-font
         (font-spec :family "Calibri" :size 16 :weight 'regular))))
+
+;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
+;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
+;; refresh your font settings. If Emacs still can't find your font, it likely
+;; wasn't installed correctly. Font issues are rarely Doom issues!
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -108,8 +109,8 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory (if clmnt/work
                         "~/OneDrive - RTL Group/Documents/org/"
-                      "~/Documents/org/")
-      org-log-done 'time)
+                      "~/Documents/org/"))
+
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -255,17 +256,18 @@
   (add-hook! 'org-after-todo-statistics-hook #'clmnt/org-summary-todo)
 
   (setq org-startup-folded 'overview
-        org-ellipsis " ")
-  (setq! org-todo-keywords '((sequence "TODO(t)" "PROJ(p)" "TBRD(r)" "STRT(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)"
-                              "|" "DONE(d)" "KILL(k)")
-                             (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
-                             (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
-  (setq! org-todo-keyword-faces '(("[-]" . +org-todo-active) ("STRT" . +org-todo-active)
-                                  ("[?]" . +org-todo-onhold) ("WAIT" . +org-todo-onhold)
-                                  ("HOLD" . +org-todo-onhold) ("PROJ" . +org-todo-project)
-                                  ("NO" . +org-todo-cancel) ("KILL" . +org-todo-cancel)
-                                  ("TBRD" . +org-todo-active)))
-  (setq! org-ascii-headline-spacing '(0 . 1)))
+        org-ellipsis " "
+        org-log-done 'time)
+  (setq org-todo-keywords '((sequence "TODO(t)" "PROJ(p)" "TBRD(r)" "STRT(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)"
+                             "|" "DONE(d)" "KILL(k)")
+                            (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
+                            (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
+  (setq org-todo-keyword-faces '(("[-]" . +org-todo-active) ("STRT" . +org-todo-active)
+                                 ("[?]" . +org-todo-onhold) ("WAIT" . +org-todo-onhold)
+                                 ("HOLD" . +org-todo-onhold) ("PROJ" . +org-todo-project)
+                                 ("NO" . +org-todo-cancel) ("KILL" . +org-todo-cancel)
+                                 ("TBRD" . +org-todo-active)))
+  (setq org-ascii-headline-spacing '(0 . 1)))
 
 (after! ox-pandoc
   (add-to-list 'org-pandoc-options-for-docx
