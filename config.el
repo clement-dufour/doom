@@ -104,13 +104,6 @@
 ;;(setq display-line-numbers-type t)
 (setq display-line-numbers-type 'relative)
 
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory (if clmnt/work
-                        "~/OneDrive - RTL Group/Documents/org/"
-                      "~/Documents/org/")
-      org-log-done 'time)
-
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
@@ -254,18 +247,23 @@
 
   (add-hook! 'org-after-todo-statistics-hook #'clmnt/org-summary-todo)
 
+  (setq org-directory (if clmnt/work
+                          "~/OneDrive - RTL Group/Documents/org/"
+                        "~/Documents/org/")
+        org-log-done 'time)
+
   (setq org-startup-folded 'overview
         org-ellipsis " ")
-  (setq! org-todo-keywords '((sequence "TODO(t)" "PROJ(p)" "TBRD(r)" "STRT(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)"
-                              "|" "DONE(d)" "KILL(k)")
-                             (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
-                             (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
-  (setq! org-todo-keyword-faces '(("[-]" . +org-todo-active) ("STRT" . +org-todo-active)
-                                  ("[?]" . +org-todo-onhold) ("WAIT" . +org-todo-onhold)
-                                  ("HOLD" . +org-todo-onhold) ("PROJ" . +org-todo-project)
-                                  ("NO" . +org-todo-cancel) ("KILL" . +org-todo-cancel)
-                                  ("TBRD" . +org-todo-active)))
-  (setq! org-ascii-headline-spacing '(0 . 1)))
+  (setq org-todo-keywords '((sequence "TODO(t)" "PROJ(p)" "TBRD(r)" "STRT(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)"
+                             "|" "DONE(d)" "KILL(k)")
+                            (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
+                            (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
+  (setq org-todo-keyword-faces '(("[-]" . +org-todo-active) ("STRT" . +org-todo-active)
+                                 ("[?]" . +org-todo-onhold) ("WAIT" . +org-todo-onhold)
+                                 ("HOLD" . +org-todo-onhold) ("PROJ" . +org-todo-project)
+                                 ("NO" . +org-todo-cancel) ("KILL" . +org-todo-cancel)
+                                 ("TBRD" . +org-todo-active)))
+  (setq org-ascii-headline-spacing '(0 . 1)))
 
 (after! ox-pandoc
   (add-to-list 'org-pandoc-options-for-docx
