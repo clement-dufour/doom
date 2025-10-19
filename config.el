@@ -174,7 +174,17 @@
   (setq browse-url-firefox-program "flatpak-spawn"
         browse-url-firefox-arguments '("--host" "flatpak" "run" "org.mozilla.firefox")))
 
-;; Misc hooks
+;; https://github.com/doomemacs/doomemacs/issues/581
+(defun clmnt/ediff-init-and-example ()
+  "ediff the current `init.el' with the example in doom-emacs-dir"
+  (interactive)
+  (ediff-files (expand-file-name "static/init.example.el" doom-emacs-dir)
+               (expand-file-name "init.el" doom-user-dir)
+               '((lambda ()
+                   (if (eq ediff-auto-refine 'on)
+                       (setq ediff-ignore-similar-regions t))))))
+
+;; Misc hook
 ;; (add-hook! 'prog-mode-hook #'tree-sitter-hl-mode)
 
 ;; https://evil.readthedocs.io/en/latest/faq.html#underscore-is-not-a-word-character
