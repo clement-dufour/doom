@@ -153,8 +153,7 @@
 (setq undo-limit (* 1024 1024)
       evil-want-fine-undo t)
 
-(setq scroll-margin 2
-      mouse-wheel-tilt-scroll t)
+(setq mouse-wheel-tilt-scroll t)
 
 ;; Frames
 (setq fancy-splash-image nil
