@@ -48,7 +48,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function.
-(defvar clmnt/light-theme 'doom-tomorrow-day)
+(defvar clmnt/light-theme 'doom-one-light)
 (defvar clmnt/dark-theme (if clmnt/work
                              'doom-palenight
                            'doom-one))
@@ -291,13 +291,14 @@
                      (expand-file-name "reference.docx" org-directory))))
 
 ;; Keybindings
-(when clmnt/work
-  (map! "M-s-<f4>" #'save-buffers-kill-terminal
-        "M-<f4>" #'save-buffers-kill-terminal))
+(map! "M-s-<f4>" #'save-buffers-kill-terminal
+      "M-<f4>" #'save-buffers-kill-terminal)
 
 (map! "C-j" #'newline-and-indent
-      :i "C-w" #'backward-kill-word
-      :leader :desc "Open URL at point" "o u" #'browse-url)
+      :i "C-w" #'backward-kill-word)
+(map! :leader
+      :desc "Open URL at point"
+      :prefix "o" "u" #'browse-url)
 
 (defun clmnt/yank-link-clipboard ()
   "Copy the url at point to the system clipboard.
@@ -309,7 +310,8 @@ If on top of an Org link, will only copy the link component."
 
 (map! :after org
       :map org-mode-map
-      :localleader :prefix "l" "Y" #'clmnt/yank-link-clipboard)
+      :localleader
+      :prefix "l" "Y" #'clmnt/yank-link-clipboard)
 
 (defun clmnt/org-tab-conditional ()
   (interactive)
@@ -339,7 +341,7 @@ If on top of an Org link, will only copy the link component."
 (map! :after dired
       :map dired-mode-map
       :n "h" #'dired-up-directory
-      :n "l" #'dired-find-file)
+      :n "l" #'dired-find-alternate-file)
 
 ;; Modes
 ;; Cisco mode
