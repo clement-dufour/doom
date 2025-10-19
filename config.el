@@ -169,6 +169,11 @@
  (add-hook! 'window-size-change-functions
             #'frame-hide-title-bar-when-maximized))
 
+(setq browse-url-browser-function 'browse-url-firefox)
+(unless clmnt/work
+  (setq browse-url-firefox-program "flatpak-spawn"
+        browse-url-firefox-arguments '("--host" "flatpak" "run" "org.mozilla.firefox")))
+
 ;; Misc hooks
 ;; (add-hook! 'prog-mode-hook #'tree-sitter-hl-mode)
 
@@ -281,7 +286,9 @@
         "M-<f4>" #'save-buffers-kill-terminal))
 
 (map! "C-j" #'newline-and-indent
-      :i "C-w" #'backward-kill-word)
+      :i "C-w" #'backward-kill-word
+      :leader :desc "Open URL at point" "o u" #'browse-url)
+
 (defun clmnt/yank-link-clipboard ()
   "Copy the url at point to the system clipboard.
 If on top of an Org link, will only copy the link component."
