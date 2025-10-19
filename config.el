@@ -280,6 +280,8 @@
   (map! "M-s-<f4>" #'save-buffers-kill-terminal
         "M-<f4>" #'save-buffers-kill-terminal))
 
+(map! "C-j" #'newline-and-indent
+      :i "C-w" #'backward-kill-word)
 (defun clmnt/yank-link-clipboard ()
   "Copy the url at point to the system clipboard.
 If on top of an Org link, will only copy the link component."
