@@ -361,7 +361,7 @@ If on top of an Org link, will only copy the link component."
      (1 font-lock-negation-char-face))
    '("^[ \t]*\\(?:no +\\)?\\(shutdown\\) *$"
      (1 font-lock-warning-face))
-   '("^[ \t]*\\(?:no +\\)?\\([A-Za-z-]+\\)\\(?: \\|$\\)"
+   '("^[ \t]*\\(?:no +\\)?\\([A-Za-z][A-Za-z0-9-]*\\)\\(?: \\|$\\)"
      (1 font-lock-builtin-face))
    '("^[ \t]*\\(?:passive-\\)?interface +\\(?:range \\)?\\([A-Za-z][A-Za-z-]* *\\(?:[0-9]\\{1,4\\}/\\)\\{0,2\\}[0-9]\\{1,4\\}\\(?:-[0-9]\\{1,4\\}\\)? *$\\)"
      (1 font-lock-constant-face))
