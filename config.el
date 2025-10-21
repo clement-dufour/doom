@@ -412,7 +412,8 @@ If on top of an Org link, will only copy the link component."
 (add-to-list 'auto-mode-alist '("\\.cfg\\'" . cisco-mode))
 
 (add-hook! 'cisco-mode-hook
-  (highlight-numbers-mode -1))
+  (if (fboundp 'highlight-numbers-mode)
+      (highlight-numbers-mode -1)))
 
 ;; (add-to-list 'consult-imenu-config
 ;;              '(cisco-mode :toplevel "Interfaces" :types
