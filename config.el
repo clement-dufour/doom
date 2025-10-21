@@ -171,7 +171,8 @@
 (setq browse-url-browser-function 'browse-url-firefox)
 (unless clmnt/work
   (setq browse-url-firefox-program "flatpak-spawn"
-        browse-url-firefox-arguments '("--host" "flatpak" "run" "org.mozilla.firefox")))
+        browse-url-firefox-arguments '("--host" "flatpak" "run"
+                                       "org.mozilla.firefox")))
 
 ;; https://github.com/doomemacs/doomemacs/issues/581
 (defun clmnt/ediff-init-and-example ()
@@ -272,17 +273,24 @@
 
   (setq org-startup-folded 'overview
         org-ellipsis " "
-        org-log-done 'time)
-  (setq org-todo-keywords '((sequence "TODO(t)" "PROJ(p)" "TBRD(r)" "STRT(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)"
+        org-log-done 'time
+
+        org-todo-keywords '((sequence "TODO(t)" "PROJ(p)" "STRT(s)" "TBRD(r)"
+                             "WAIT(w)" "HOLD(h)" "IDEA(i)"
                              "|" "DONE(d)" "KILL(k)")
                             (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
-                            (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
-  (setq org-todo-keyword-faces '(("[-]" . +org-todo-active) ("STRT" . +org-todo-active)
-                                 ("[?]" . +org-todo-onhold) ("WAIT" . +org-todo-onhold)
-                                 ("HOLD" . +org-todo-onhold) ("PROJ" . +org-todo-project)
-                                 ("NO" . +org-todo-cancel) ("KILL" . +org-todo-cancel)
-                                 ("TBRD" . +org-todo-active)))
-  (setq org-ascii-headline-spacing '(0 . 1)))
+                            (sequence "|" "OKAY(o)" "YES(y)" "NO(n)"))
+        org-todo-keyword-faces '(("[-]" . +org-todo-active)
+                                 ("STRT" . +org-todo-active)
+                                 ("TBRD" . +org-todo-active)
+                                 ("[?]" . +org-todo-onhold)
+                                 ("WAIT" . +org-todo-onhold)
+                                 ("HOLD" . +org-todo-onhold)
+                                 ("PROJ" . +org-todo-project)
+                                 ("NO" . +org-todo-cancel)
+                                 ("KILL" . +org-todo-cancel))
+
+        org-ascii-headline-spacing '(0 . 1)))
 
 (after! ox-pandoc
   (add-to-list 'org-pandoc-options-for-docx
