@@ -513,7 +513,7 @@ If on top of an Org link, will only copy the link component."
 
 (define-derived-mode vsm-mode
   prog-mode "VSM Logfile"
-  "Major mode for editing Cisco configuration files."
+  "Major mode for browsing VSM logfiles."
   (setq font-lock-defaults '(vsm-font-lock-keywords t)
         comment-start "^="
         comment-end ""
