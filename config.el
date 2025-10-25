@@ -146,6 +146,7 @@
 
 ;; Emacs miscellaneous configuration
 (setq select-enable-clipboard nil
+      delete-by-moving-to-trash t
       ;; confirm-kill-emacs nil
       visible-bell t)
 
