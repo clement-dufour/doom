@@ -211,6 +211,10 @@
               #'doom-dashboard-widget-loaded)
         +doom-dashboard-name "Dashboard"))
 
+(after! transient
+  (setq transient-values '((magit-pull "--rebase")
+                           (docker-compose-up "-d"))))
+
 (after! evil
   ;; Implicit /g flag on evil ex substitution
   (setq evil-ex-substitute-global t
