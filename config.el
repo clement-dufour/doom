@@ -310,7 +310,9 @@
       "M-<f4>" #'save-buffers-kill-terminal)
 
 (map! "C-j" #'newline-and-indent
-      :i "C-w" #'backward-kill-word)
+      :i "C-w" #'backward-kill-word
+      :i "C-y" #'yank)
+
 (map! :leader
       :desc "Open URL at point"
       :prefix "o" "u" #'browse-url)
