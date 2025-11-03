@@ -170,10 +170,13 @@
             #'frame-hide-title-bar-when-maximized))
 
 (setq browse-url-browser-function 'browse-url-firefox)
-(unless clmnt/work
-  (setq browse-url-firefox-program "flatpak-spawn"
-        browse-url-firefox-arguments '("--host" "flatpak" "run"
-                                       "org.mozilla.firefox")))
+(if (eq system-type 'windows-nt)
+    (setq browse-url-firefox-program
+          "C:\\Program Files\\Mozilla Firefox\\firefox.exe")
+  (unless (executable-find "firefox")
+      (setq browse-url-firefox-program "flatpak-spawn"
+            browse-url-firefox-arguments '("--host" "flatpak" "run"
+                                           "org.mozilla.firefox"))))
 
 ;; https://github.com/doomemacs/doomemacs/issues/581
 (defun clmnt/ediff-init-and-example ()
