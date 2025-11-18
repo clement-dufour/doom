@@ -170,7 +170,7 @@
  (add-hook! 'window-size-change-functions
             #'frame-hide-title-bar-when-maximized))
 
-(setq browse-url-browser-function 'browse-url-firefox)
+;; (setq browse-url-browser-function 'browse-url-firefox)
 (if (eq system-type 'windows-nt)
     (setq browse-url-firefox-program
           "C:\\Program Files\\Mozilla Firefox\\firefox.exe")
