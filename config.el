@@ -158,7 +158,8 @@
 
 ;; Frames
 (setq fancy-splash-image nil
-      frame-title-format "%b - Emacs")
+      frame-title-format "%b - Emacs"
+      icon-title-format t)
 
 ;; The initial frame is already loaded when config.el is run, the following sexp
 ;; has not effect. Using the deamon solves this.
