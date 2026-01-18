@@ -361,6 +361,8 @@ If on top of an Org link, will only copy the link component."
       :n "h" #'dired-up-directory
       :n "l" #'dired-find-alternate-file)
 
+(add-to-list 'auto-mode-alist '("\\.\\(?:automount\\|device\\|mount\\|path\\|scope\\|service\\|slice\\|socket\\|swap\\|target\\|timer\\)\\'" . conf-mode))
+
 ;; Modes
 ;; Cisco mode
 (defvar cisco-font-lock-keywords
