@@ -251,9 +251,10 @@
 
 (after! which-key
   (setq which-key-allow-multiple-replacements t)
-  (pushnew! which-key-replacement-alist
-            '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
-            '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))))
+  (cl-pushnew '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
+              which-key-replacement-alist :test #'equal)
+  (cl-pushnew '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))
+              which-key-replacement-alist :test #'equal))
 
 (after! ispell
   ;; Configure `LANG`, otherwise ispell.el cannot find a 'default
