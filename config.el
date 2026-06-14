@@ -269,9 +269,9 @@
   (ispell-set-spellchecker-params)
   (ispell-hunspell-add-multi-dic "en_US,fr_FR"))
 
-(defun clmnt/org-summary-todo (n-done n-not-done)
+(defun clmnt/org-summary-todo (n-done n-not-done) ;noflycheck
   "Switch entry to DONE when all subentries are done, to TODO otherwise."
-  (let (org-log-done org-todo-log-states)
+  (let (org-log-done org-todo-log-states) ;noflycheck
     (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
 
 (after! org
@@ -308,6 +308,32 @@
   (add-to-list 'org-pandoc-options-for-docx
                (cons 'reference-doc
                      (expand-file-name "reference.docx" org-directory))))
+
+;; https://emacs.stackexchange.com/a/83533
+(after! flycheck
+  (defcustom flycheck-elisp-noflycheck-marker ";noflycheck"
+    "Flycheck line regions marked with this marker string are ignored."
+    :type 'string
+    :group 'flycheck)
+
+  (defun flycheck-elisp-noflycheck (err)
+    "Ignore flycheck if line contain value of
+`flycheck-elisp-noflycheck-marker'."
+    (save-excursion
+      (goto-char (cdr (flycheck-error-region-for-mode err 'symbols)))
+      (let ((text (buffer-substring (line-beginning-position)
+                                    (line-end-position))))
+        (when (string-match-p flycheck-elisp-noflycheck-marker text)
+          (setq flycheck-current-errors (delete err flycheck-current-errors))
+          ;; needs to return non-nil (thus the last t) to ignore the error
+          t))))
+
+  (defun elisp-noflycheck-hook ()
+    (require 'flycheck)
+    (add-hook 'flycheck-process-error-functions
+              #'flycheck-elisp-noflycheck nil t))
+
+  (add-hook 'emacs-lisp-mode-hook #'elisp-noflycheck-hook))
 
 ;; Keybindings
 (map! "M-s-<f4>" #'save-buffers-kill-terminal
