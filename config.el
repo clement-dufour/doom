@@ -197,6 +197,8 @@
   (modify-syntax-entry ?_ "w")
   (modify-syntax-entry ?- "w"))
 
+(add-hook 'emacs-lisp-mode-hook #'display-fill-column-indicator-mode)
+
 ;; Package specific configuration
 (after! doom
   ;; Simpler one-liner banner
