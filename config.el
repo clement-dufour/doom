@@ -6,7 +6,6 @@
                        (memq 'wsl doom-system))
   "Configuration might get different on my work laptop.")
 
-
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
 (setq user-full-name "Clément Dufour")
@@ -390,26 +389,6 @@ If on top of an Org link, will only copy the link component."
       :n "h" #'dired-up-directory
       :n "l" #'dired-find-alternate-file)
 
-(add-to-list 'auto-mode-alist
-             (cons (concat "\\."
-                           (regexp-opt '("automount"
-                                         "container"
-                                         "device"
-                                         "mount"
-                                         "network"
-                                         "path"
-                                         "pod"
-                                         "scope"
-                                         "service"
-                                         "slice"
-                                         "socket"
-                                         "swap"
-                                         "target"
-                                         "timer"
-                                         "volume"))
-                           "\\'")
-                   'conf-mode))
-;;
 ;; Modes
 ;; Cisco mode
 (defvar cisco-font-lock-keywords

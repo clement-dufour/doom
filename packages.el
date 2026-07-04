@@ -50,3 +50,4 @@
 ;; (unpin! t)
 
 (package! evil-escape :disable t)
+(package! systemd)
