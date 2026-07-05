@@ -201,21 +201,17 @@
 ;; Package specific configuration
 (after! doom
   ;; Simpler one-liner banner
-  (defun clmnt/draw-ascii-banner ()
-    (insert
+  (defun clmnt/dashboard-draw-ascii-banner-fn ()
      (propertize
-      (+doom-dashboard--center
-       +doom-dashboard--width
-       "Doom Emacs")
-      'face 'doom-dashboard-loaded)
-     "\n"))
+       "Doom Emacs"
+      'face '+dashboard-banner))
 
-  (setq +doom-dashboard-ascii-banner-fn #'clmnt/draw-ascii-banner)
+  (setq +dashboard-ascii-banner-fn #'clmnt/dashboard-draw-ascii-banner-fn)
 
-  (setq +doom-dashboard-functions
-        (list #'doom-dashboard-widget-banner
-              #'doom-dashboard-widget-loaded)
-        +doom-dashboard-name "Dashboard"))
+  (setq +dashboard-functions
+        (list #'+dashboard-widget-banner
+              ;; #'+dashboard-widget-loaded
+              )))
 
 (after! transient
   (setq transient-values '((magit-pull "--rebase")
