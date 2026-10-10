@@ -380,6 +380,20 @@ If on top of an Org link, will only copy the link component."
       :n "h" #'dired-up-directory
       :n "l" #'dired-find-alternate-file)
 
+(add-to-list 'auto-mode-alist
+             (cons (concat "\\."
+                           (regexp-opt '("artifact"
+                                         "build"
+                                         "container"
+                                         "image"
+                                         "kube"
+                                         "network"
+                                         "pod"
+                                         "quadlets"
+                                         "volume"))
+                           "\\'")
+                   'conf-mode))
+
 ;; Modes
 ;; Cisco mode
 (defvar cisco-font-lock-keywords
