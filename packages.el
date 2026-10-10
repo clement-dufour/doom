@@ -50,4 +50,5 @@
 ;; (unpin! t)
 
 (package! evil-escape :disable t)
+;; (package! systemd :recipe (:repo "mavit/systemd-mode" :branch "podman") :pin "63f7c37")
 (package! systemd)
