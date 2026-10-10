@@ -210,12 +210,7 @@
 
   (setq +dashboard-functions
         (list #'+dashboard-widget-banner
-              ;; #'+dashboard-widget-loaded
-              )))
-
-(after! transient
-  (setq transient-values '((magit-pull "--rebase")
-                           (docker-compose-up "-d"))))
+              #'+dashboard-widget-loaded)))
 
 (after! evil
   ;; Implicit /g flag on evil ex substitution
@@ -463,93 +458,3 @@ If on top of an Org link, will only copy the link component."
 ;;                ((?i "Interfaces" font-lock-type-face)
 ;;                 (?v "VLANs" font-lock-type-face)
 ;;                 (?h "Hostnames" font-lock-string-face))))
-
-;; Vimrc mode
-;; TODO: Should probably derive from conf space mode
-(defvar vimrc-font-lock-keywords
-  (list
-   '("^[ \t]*\\(\"+\\)"
-     (1 font-lock-comment-delimiter-face))
-   '("^[ \t]*\"+\\(.*\\)$"
-     (1 font-lock-comment-face prepend))
-   '("^[ \t]*\\([A-Za-z]+\\)\\( \\|$\\)"
-     (1 font-lock-keyword-face))
-   '("^[ \t]*\\(let\\|set\\) +\\([A-Za-z_]*\\)\\>"
-     (2 font-lock-variable-name-face))
-   '("<\\([A-Za-z]+\\)"
-     (1 font-lock-builtin-face)))
-  "Font lock defaults for `vimrc mode'.")
-
-(define-derived-mode vimrc-mode
-  prog-mode "vimrc"
-  "Major mode for editing vim configuration files."
-  (setq font-lock-defaults '(vimrc-font-lock-keywords t)
-        comment-start "\"\""
-        comment-end ""
-        comment-start-skip "^[ \t]*\"+[ \t]*"))
-
-(add-to-list 'auto-mode-alist '("\\(init\\.vim\\|vimrc\\)\\'" . vimrc-mode))
-
-;; Lawo VSM Logfile mode
-(defvar vsm-font-lock-keywords
-  (list
-   '("^\\(=+\\(?: +\\)?\\)\\(.*\\)$"
-     (1 font-lock-comment-delimiter-face)
-     (2 font-lock-comment-face))
-   '("\\(A#[0-9]+-[0-9]+\\)"
-     (1 font-lock-comment-face))
-   '("\\(\\[Et: *[0-9.]+ms, Qt: *[0-9.]+ms\\]\\)"
-     (1 font-lock-comment-face))
-   '("\\([0-9]\\{2\\}:[0-9]\\{2\\}:[0-9]\\{2\\}.[0-9]\\{3\\}\\)"
-     (1 font-lock-builtin-face))
-   '("^[ \t]+\\(<< =\\|<<\\|>>\\|-\\{1,2\\}\\|=\\|\\[\\|'\\|»\\)"
-     (1 font-lock-builtin-face))
-   '("\\(pseudo: all (eeConnect\\(?:Dependent\\)?)\\)"
-     (1 font-lock-builtin-face))
-   '("\\(\{\\(?:Signal\\|Node\\|Timer\\|ButtonCache\\|Parameter\\|GP-I/O\\|StoredGPI\\):.+\}\\)"
-     (1 font-lock-keyword-face))
-   '("\{\\(?:Signal\\|Node\\): \\(.*\\)\}"
-     (1 font-lock-string-face prepend))
-   '("\\(I\\|O\\):\\([0-9]+\\) \\(\".+\"\\)"
-     (1 font-lock-keyword-face prepend)
-     (2 font-lock-constant-face prepend)
-     (3 font-lock-string-face prepend))
-   '("^[ \t]+\\(?:<< =\\|<<\\|>>\\|-\\{1,2\\}\\|=\\|\\[\\|'\\|»\\)+[ \t]+\\(?:A#[0-9]+-[0-9]+ \\)?\\(\\(?:\"\\|{\\|<\\).+\\(?:\"\\|}\\|>\\)\\) \\(<-\\|<=\\) \\(\\(?:\"\\|{\\|<\\).+\\(?:\"\\|}\\|>\\)\\)"
-     (1 font-lock-string-face)
-     (2 font-lock-keyword-face)
-     (3 font-lock-string-face))
-   '("\\([0-9.:]+-Client\\(?: [0-9/]+\\)?\\)"
-     (1 font-lock-constant-face))
-   '("\\([0-9.:]+ (\\(?:TCP\\|UDP\\)) \\[[A-Za-z0-9,() ]+\\]\\)"
-     (1 font-lock-constant-face))
-   (cons (regexp-opt '("True"
-                       "Success"
-                       "Set"
-                       "Start"
-                       "pressed"
-                       "release"
-                       "delegated"
-                       "unused to blind"
-                       "Internal Layer Sync")
-                     'words)
-         '(1 font-lock-warning-face))
-   (cons (regexp-opt '("False"
-                       "Failure"
-                       "Reset"
-                       "Error"
-                       "no route found")
-                     'words)
-         '(1 font-lock-negation-char-face))
-   '("\\(<no handler>\\)"
-     (1 font-lock-negation-char-face))
-   '("^@[0-9]\\{2\\}:[0-9]\\{2\\}:[0-9]\\{2\\}.[0-9]\\{3\\} A#[0-9]+-[0-9]+ \\(\\(?:System Time:\\|[0-9]\\{2\\}:[0-9]\\{2\\}:[0-9]\\{2\\}.[0-9]\\{3\\}\\|[0-9.:]+\\) .*\\)"
-     (1 font-lock-comment-face prepend)))
-"Font lock defaults for `vsm mode'.")
-
-(define-derived-mode vsm-mode
-  prog-mode "VSM Logfile"
-  "Major mode for browsing VSM logfiles."
-  (setq font-lock-defaults '(vsm-font-lock-keywords t)
-        comment-start "^="
-        comment-end ""
-        comment-start-skip "^=+ *"))
