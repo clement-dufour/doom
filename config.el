@@ -230,6 +230,12 @@
              evil-ex-search-next evil-ex-search-previous)
     (evil-scroll-line-to-center nil)))
 
+(after! projectile
+  (setq projectile-project-search-path
+        '(
+          ("~/Projects" . 1)
+          )))
+
 (after! writeroom-mode
   (setq +zen-text-scale 0.8))
 
